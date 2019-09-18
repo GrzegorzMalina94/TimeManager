@@ -1,0 +1,13 @@
+﻿<UserControl x:Class="TimeManager.ActivityControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TimeManager"
+             mc:Ignorable="d" 
+             d:DesignHeight="28" d:DesignWidth="150" BorderBrush="Black" BorderThickness="0">
+    <WrapPanel>
+        <Rectangle Name="Square" Height="20" Width="20" Margin="15,4" Fill="DarkBlue"/>
+        <Label Name="ActivityLabel" MinWidth="100" FontFamily="Times New Roman" FontSize="12" />
+    </WrapPanel>
+</UserControl>
