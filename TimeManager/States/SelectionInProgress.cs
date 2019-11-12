@@ -32,8 +32,8 @@ namespace TimeManager.States
 
         public void QuarterRectangle_MouseEnter(Quarter quarterSender)
         {
-            _actionHandler.AddToSelection(quarterSender);
-            quarterSender.AddFrame();
+            _actionHandler.ConditionallyAddToSelection(quarterSender);
+            quarterSender.SetSelectionFrame();
         }
     }
 }

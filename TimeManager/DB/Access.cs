@@ -12,10 +12,8 @@ namespace TimeManager.DB
     class Access
     {
         private static Access _instance;
-        private SQLiteDataAdapter m_oDataAdapter = null;
-        private DataSet m_oDataSet = null;
-        private DataTable m_oDataTable = null;
-
+        private SQLiteDataAdapter m_oDataAdapter = null;        
+        
         private Access()
         {
 
@@ -30,10 +28,10 @@ namespace TimeManager.DB
             return _instance;
         }
 
-        public void SaveData(string[] values)
+        public void SaveData(string[] plan, string[] report)
         {
             string connectionString = "Data Source=TimeManagerDB.db";
-            string queryString = "delete from Quarters where id >= 0";
+            string queryString = "DELETE FROM Quarters WHERE id >= 0";
             using (SQLiteConnection connection = new SQLiteConnection(
                connectionString))
             {
@@ -41,9 +39,9 @@ namespace TimeManager.DB
                 command.Connection.Open();
                 command.ExecuteNonQuery();
 
-                for (int i = 0; i < values.Length; i++)
+                for (int i = 0; i < plan.Length; i++)
                 {
-                    queryString = "Insert into Quarters (id, Activity) values (" + i.ToString() + " ,'" + values[i] + "')";
+                    queryString = "INSERT INTO Quarters (id, Plan, Report) VALUES (" + i.ToString() + ", '" + plan[i] + "', '" + report[i] +"')";
                     command.CommandText = queryString;
                     command.ExecuteNonQuery();
                 }
@@ -51,12 +49,11 @@ namespace TimeManager.DB
 
         }
 
-        public string[] ReadData()
+        public void ReadData(string[] plan, string[] report)
         {
             string connectionString = "Data Source=TimeManagerDB.db";
             string queryString = "SELECT * FROM Quarters WHERE id <= 671";
             SQLiteDataReader dataReader;
-            string[] obtainedData = new string[672];
 
             using (SQLiteConnection connection = new SQLiteConnection(
                connectionString))
@@ -67,11 +64,12 @@ namespace TimeManager.DB
 
                 for(int i = 0;  dataReader.Read(); i++)
                 {
-                    obtainedData[i] = dataReader.GetString(1);
+                    if (!dataReader.IsDBNull(1)) plan[i] = dataReader.GetString(1);
+                    else plan[i] = "Nothing";
+                    if (!dataReader.IsDBNull(2)) report[i] = dataReader.GetString(2);
+                    else report[i] = "Nothing";
                 }
             }
-
-            return obtainedData;
         }
 
         public void On_Window_Closing()

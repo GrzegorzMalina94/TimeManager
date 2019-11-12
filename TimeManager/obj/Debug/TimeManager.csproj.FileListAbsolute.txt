@@ -31,3 +31,5 @@ D:\GM\Praca\Nauka domowa\Wpf\TimeManager\TimeManager\bin\Debug\EntityFramework.x
 D:\GM\Praca\Nauka domowa\Wpf\TimeManager\TimeManager\bin\Debug\EntityFramework.SqlServer.xml
 D:\GM\Praca\Nauka domowa\Wpf\TimeManager\TimeManager\bin\Debug\System.Data.SQLite.xml
 D:\GM\Praca\Nauka domowa\Wpf\TimeManager\TimeManager\bin\Debug\System.Data.SQLite.dll.config
+D:\GM\Praca\Nauka domowa\Wpf\TimeManager\TimeManager\obj\Debug\StatisticsWindow.g.cs
+D:\GM\Praca\Nauka domowa\Wpf\TimeManager\TimeManager\obj\Debug\StatisticsWindow.baml

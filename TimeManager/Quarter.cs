@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -14,39 +15,67 @@ namespace TimeManager
 {
     public class Quarter
     {
-        Rectangle _quarterRectangle;        
+        Rectangle _plnnActvtRctng;
+        Rectangle _realActvtRctng;
+        StackPanel _quarterArea;
         ActionHandler _actionHandler;
-        Activity _assignedActivity;
-        ActivitiesManager _activitiesManager;
+        Activity _plannedActivity;
+        Activity _realActivity;
+        public QuarterIdentifier Identifier { get; set; }
 
-        public Activity AssignedActivity
+        public Activity PlannedActivity
         {
             get
             {
-                return _assignedActivity;
+                return _plannedActivity;
             }
-
             set
             {
-                _assignedActivity = value;
+                _plannedActivity = value;
                 Binding binding = new Binding("SquareColor");
-                binding.Source = _assignedActivity;
-                _quarterRectangle.SetBinding(Shape.FillProperty, binding);
+                binding.Source = _plannedActivity;
+                _plnnActvtRctng.SetBinding(Shape.FillProperty, binding);
             }
         }
-        
-        
 
-        public Quarter(Rectangle quarterRectangle, string activityName)
+        public Activity RealActivity
         {
-            _quarterRectangle = quarterRectangle;
-            _activitiesManager = ActivitiesManager.GetInstance();
-            AssignedActivity = _activitiesManager.GetActivity(activityName);
+            get
+            {
+                return _realActivity;
+            }
+            set
+            {
+                _realActivity = value;
+                Binding binding = new Binding("SquareColor");
+                binding.Source = _realActivity;
+                _realActvtRctng.SetBinding(Shape.FillProperty, binding);
+            }
+        }
+
+
+
+        public Quarter(StackPanel quarterArea, Activity plannedActivity, Activity realActivity, QuarterIdentifier identifier)
+        {
+            _quarterArea = quarterArea;
+
+            _plnnActvtRctng = new Rectangle();
+            _realActvtRctng = new Rectangle();
+            _realActvtRctng.Width = 30;
+            PlannedActivity = plannedActivity;
+            RealActivity = realActivity;
+            _quarterArea.Children.Add(_plnnActvtRctng);
+            _quarterArea.Children.Add(_realActvtRctng);
+
+            Identifier = identifier;
+
             _actionHandler = ActionHandler.GetInstance();
             
-            _quarterRectangle.MouseLeftButtonDown += _quarterRectangle_MouseLeftButtonDown;
-            _quarterRectangle.MouseEnter += _quarterRectangle_MouseEnter;
-            _quarterRectangle.MouseLeftButtonUp += _quarterRectangle_MouseLeftButtonUp;
+
+            SetStandardFrame();
+            _plnnActvtRctng.MouseLeftButtonDown += _quarterRectangle_MouseLeftButtonDown;
+            _plnnActvtRctng.MouseEnter += _quarterRectangle_MouseEnter;
+            _plnnActvtRctng.MouseLeftButtonUp += _quarterRectangle_MouseLeftButtonUp;
         }
         
 
@@ -68,23 +97,51 @@ namespace TimeManager
 
 
 
-        public void AddFrame()
+        public void SetSelectionFrame()
         {
             SolidColorBrush blackBrush = new SolidColorBrush(Colors.Black);
-            _quarterRectangle.Stroke = blackBrush;
-            _quarterRectangle.StrokeThickness = 2;
+            Border border = (_quarterArea.Parent as Border);
+            border.BorderBrush = blackBrush;
+            border.BorderThickness = new Thickness(2);
+            _plnnActvtRctng.Height = 16;// (borders thickness) * 2 + rectangle height = 20
+
+            _realActvtRctng.Height = 12;
+            _realActvtRctng.Margin = new Thickness(90, -14, 0, 0);
         }
 
-        public void RemoveFrame()
+        public void SetStandardFrame()
         {
-            SolidColorBrush whiteBrush = new SolidColorBrush(Colors.White);
-            _quarterRectangle.Stroke = whiteBrush;
-            _quarterRectangle.StrokeThickness = 1;
+            SolidColorBrush blackBrush = new SolidColorBrush(Colors.Black);
+            Border border = (_quarterArea.Parent as Border);
+            border.BorderBrush = blackBrush;
+            _plnnActvtRctng.Height = 18.75;//Height of hour = 80 = rectHeight * 4 + borders = 75 + 1 + 1 + 1 + 1 + 1 => rectHeight = 75 / 4 = 18.75
+
+            _realActvtRctng.Height = 13;
+            _realActvtRctng.Margin = new Thickness(90, -15.88, 0, 0);
+
+            switch (Identifier.QuarterNumber % 4 )
+            {
+                case 0:
+                    border.BorderThickness = new Thickness(0.5, 1, 0.5, 0.5);
+                    break;
+                case 1:
+                    border.BorderThickness = new Thickness(0.5, 0.5, 0.5, 0.5);
+                    break;
+                case 2:
+                    border.BorderThickness = new Thickness(0.5, 0.5, 0.5, 0.5);
+                    break;
+                case 3:
+                    border.BorderThickness = new Thickness(0.5, 0.5, 0.5, 1);
+                    break;
+                default:
+                    border.BorderThickness = new Thickness(0.5, 0.5, 0.5, 0.5);
+                    break;
+            }
         }
 
         public void Colour(SolidColorBrush color)
         {
-            _quarterRectangle.Fill = color;
+            _plnnActvtRctng.Fill = color;
         }
     }
 }

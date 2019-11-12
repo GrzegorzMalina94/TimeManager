@@ -19,7 +19,16 @@ namespace TimeManager
         ActionHandler _actionHandler;
         List<Activity> _activities = new List<Activity>();
         ActivityControl _selectedAC;
-        public static Activity NullActivity { get; } = new Activity("Nothing", Colors.Yellow);
+        Week _week;
+        public static Activity NullActivity { get; } = new Activity("Nothing", Colors.White);
+
+        public List<Activity> Activities
+        {
+            get
+            {
+                return _activities;
+            }
+        }
 
         private ActivitiesManager()
         {
@@ -35,10 +44,11 @@ namespace TimeManager
             return _instance;
         }
 
-        public void Start(StackPanel activitiesPanel, ActionHandler actionHandler)
+        public void Start(StackPanel activitiesPanel, ActionHandler actionHandler, Week week)
         {
             _activitiesPanel = activitiesPanel;
             _actionHandler = actionHandler;
+            _week = week;
             if (File.Exists("Activities.dat"))
             {
                 using (Stream input = File.OpenRead("Activities.dat"))
@@ -84,6 +94,8 @@ namespace TimeManager
             {
                 Activity selectedActivity = GetActivity(_selectedAC.ActivityName);
                 _activitiesPanel.Children.Remove(_selectedAC);
+                _week.NullAssigment(QrtrsMrkngMode.Planning, selectedActivity.GetIdsToPlanAssignedQuarters());
+                _week.NullAssigment(QrtrsMrkngMode.Reporting, selectedActivity.GetIdsToReportAssignedQuarters());
                 _activities.Remove(selectedActivity);
                 _selectedAC = null;
             }
@@ -113,9 +125,11 @@ namespace TimeManager
 
         public Activity GetActivity(string activityName)
         {
-            if (activityName != "Nothing")
+            //desiredActivity list will be list with one element
+            List<Activity> desiredActivity = _activities.Where(activity => activity.Name == activityName).ToList();
+            if (desiredActivity.Count() > 0)
             {
-                return _activities.Where(activity => activity.Name == activityName).Last();
+                return desiredActivity.Last();
             }
             else
             {

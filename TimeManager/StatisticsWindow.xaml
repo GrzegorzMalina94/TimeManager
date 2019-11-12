@@ -1,0 +1,92 @@
+﻿<Window x:Class="TimeManager.StatisticsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TimeManager"
+        mc:Ignorable="d"
+        Title="StatisticsWindow" MinHeight="600" MinWidth="1200" >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2.5*"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="17.5*"/>
+            <RowDefinition Height="67.5*"/>
+            <RowDefinition Height="2.5*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2.5*"/>
+            <ColumnDefinition Width="95*"/>
+            <ColumnDefinition Width="2.5*"/>
+        </Grid.ColumnDefinitions>
+        <Label Name="Title" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"
+               FontSize="32" FontFamily="Times New Roman">Statistics</Label>
+        <Grid Name="ListBoxesGrid" Grid.Column="1" Grid.Row="2">            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel>
+                <Label Style="{StaticResource UpprStatWindLabl}">Month</Label>
+                <ComboBox HorizontalAlignment="Center" VerticalAlignment="Center" Width="120"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1">
+                <Label Style="{StaticResource UpprStatWindLabl}">Week</Label>
+                <ComboBox HorizontalAlignment="Center" VerticalAlignment="Center" Width="120"/>
+            </StackPanel>
+            <StackPanel Grid.Column="2">
+                <Label Style="{StaticResource UpprStatWindLabl}">Day</Label>
+                <ComboBox HorizontalAlignment="Center" VerticalAlignment="Center" Width="120">
+                    <ComboBoxItem>Monday</ComboBoxItem>
+                    <ComboBoxItem>Tuesday</ComboBoxItem>
+                    <ComboBoxItem>Wednesday</ComboBoxItem>
+                    <ComboBoxItem>Thursday</ComboBoxItem>
+                    <ComboBoxItem>Friday</ComboBoxItem>
+                    <ComboBoxItem>Saturday</ComboBoxItem>
+                    <ComboBoxItem>Sunday</ComboBoxItem>
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Grid.Column="3">
+                <Label Style="{StaticResource UpprStatWindLabl}">Period</Label>
+                <ComboBox HorizontalAlignment="Center"  Grid.Column="3" VerticalAlignment="Center" Width="120">
+                    <ComboBoxItem>Day</ComboBoxItem>
+                    <ComboBoxItem>Week</ComboBoxItem>
+                </ComboBox>
+            </StackPanel>       
+        </Grid>
+        <ScrollViewer Grid.Row="3" Grid.Column="1" Height="Auto">
+            <Grid Name="InfoGrid" Grid.Column="1" Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Name="ActivityName" Grid.Column="0">
+                    <Label Style="{StaticResource LowrStatWindLabl}" Margin="35,0"  HorizontalContentAlignment="Left"
+                           Content="Activity" FontWeight="Bold" >                        
+                    </Label>
+                </StackPanel>
+                <StackPanel Name="QrtsQnttyPlnnd" Grid.Column="1">
+                    <Label Style="{StaticResource LowrStatWindLabl}" Content="Quarters quantity&#10;according to plan"
+                           FontWeight="Bold" >                        
+                    </Label>
+                </StackPanel>
+                <StackPanel Name="QrtsQnttyRlty" Grid.Column="2">
+                    <Label Style="{StaticResource LowrStatWindLabl}" Content="Quarters quantity&#10;       in reality"
+                           FontWeight="Bold" >                        
+                    </Label>
+                </StackPanel>
+                <StackPanel Name="RPlanPercent" Grid.Column="3">
+                    <Label Style="{StaticResource LowrStatWindLabl}" Content="Reality / plan&#10;  in percents"
+                           FontWeight="Bold" >                        
+                    </Label>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+    
+</Window>

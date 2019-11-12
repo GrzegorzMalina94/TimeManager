@@ -10,17 +10,29 @@ namespace TimeManager
 {
     public class Week
     {
+        private static Week _instance;
+        public static int QnttOfQrtsInWeek = 672;
         Grid _weekGrid;
         Day[] _days = new Day[7];
         string[] _daysNames = new string[7] { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
         ActionHandler _actionHandler;
         DB.Access _dbAccess;
-                
-        /// <summary>
-        /// Initialize reference to the grid, which contains plan for all week. Fullfill week with days.
-        /// </summary>
-        /// <param name="centralGrid">Must be one-row, seven-columns grid (one column per one day).</param>
-        public Week(Grid centralGrid)
+        
+        public static Week GetInstance()
+        {
+            if (_instance == null)
+            {
+                return new Week();
+            }
+            else return _instance;
+        }
+
+        private Week()
+        {
+                  
+        }
+
+        public void ActualInitialisation(Grid centralGrid)
         {
             _weekGrid = centralGrid;
             _actionHandler = ActionHandler.GetInstance();
@@ -28,31 +40,43 @@ namespace TimeManager
             _dbAccess = DB.Access.GetInstance();
 
             //Creating "Day" variables and theirs representation in GUI. 
-            string[] loadedData = _dbAccess.ReadData();
-            for (int i = 0; i < 7; i++)
+            string[] plan = new string[QnttOfQrtsInWeek];
+            string[] report = new string[QnttOfQrtsInWeek];
+            _dbAccess.ReadData(plan, report);
+            for (byte i = 0; i < 7; i++)
             {
                 StackPanel dayStackPanel = new StackPanel();
                 _weekGrid.Children.Add(dayStackPanel);
                 Grid.SetColumn(dayStackPanel, i);
-                if(loadedData.Length == 672)  //Execute when CORRECT number of records was taken from database.
-                    _days[i] = new Day(dayStackPanel, _daysNames[i], loadedData.Skip(i*96).Take(96).ToArray());
-                else                          //Execute  when INCORRECT number of records was taken from database.
-                {
-                    _days[i] = new Day(dayStackPanel, _daysNames[i], null);
-                }
+                _days[i] = new Day(dayStackPanel, _daysNames[i], plan.Skip(i * 96).Take(96).ToArray(),
+                   report.Skip(i * 96).Take(96).ToArray(), i);
+                
             }
-            
-            
         }
         
         public void SaveData()
         {
-            string[] dataToSave = _days[0].GetDayPlan();
-            for(int i = 1; i < 7; i++)
+            string[] plan = _days[0].GetDayPlan();
+            string[] report = _days[0].GetDayReport();
+            for (int i = 1; i < 7; i++)
             {
-                dataToSave = dataToSave.Concat(_days[i].GetDayPlan()).ToArray();
+                plan = plan.Concat(_days[i].GetDayPlan()).ToArray();
+                report = report.Concat(_days[i].GetDayReport()).ToArray();
             }
-            _dbAccess.SaveData(dataToSave);
+            _dbAccess.SaveData(plan, report);
+        }
+
+        Quarter GetQuarter(byte day, byte quarter)
+        {
+            return _days[day].GetQuarter(quarter);
+        }
+
+        public void NullAssigment(QrtrsMrkngMode markingMode, List<QuarterIdentifier> qrtsIds)
+        {
+            foreach(QuarterIdentifier qrtId in qrtsIds)
+            {
+                _days[qrtId.DayNumber].NullAssigment(markingMode, qrtId.QuarterNumber);
+            }
         }
     }
 }

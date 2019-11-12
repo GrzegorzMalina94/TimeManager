@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TimeManager"
              mc:Ignorable="d" 
-             d:DesignHeight="28" d:DesignWidth="150" BorderBrush="Black" BorderThickness="0">
+             d:DesignHeight="28" d:DesignWidth="150" BorderBrush="Black">
     <WrapPanel>
         <Rectangle Name="Square" Height="20" Width="20" Margin="15,4" Fill="DarkBlue"/>
         <Label Name="ActivityLabel" MinWidth="100" FontFamily="Times New Roman" FontSize="12" />

@@ -22,7 +22,7 @@ namespace TimeManager.States
 
         public void ActivityControl_Click(object sender)
         {
-            _actionHandler.ColourSelectedQuarters((sender as ActivityControl).ActivityName);
+            _actionHandler.AssignActivityToSelectedQuarters((sender as ActivityControl).ActivityName);
         }
 
         public void WeekGrid_MouseLeave()

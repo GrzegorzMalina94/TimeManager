@@ -29,19 +29,20 @@ namespace TimeManager
 
             ActionHandler actionHandler = ActionHandler.GetInstance();
             ActivitiesManager activitiesManager = ActivitiesManager.GetInstance();
-            activitiesManager.Start(ActivitiesPanel, actionHandler);
+            _week = Week.GetInstance();
+            activitiesManager.Start(ActivitiesPanel, actionHandler, _week);
             actionHandler.Start(activitiesManager);
-            _week = new Week(WeekGrid);
+            _week.ActualInitialisation(WeekGrid);
 
             AddActivityBtn.Click += actionHandler.AddActivityBtn_Click;
             RemoveActivityBtn.Click += actionHandler.RemoveActivityBtn_Click;
             TestBtn.Click += actionHandler.TestBtn_Click;
-
-            string[] array = DB.Access.GetInstance().ReadData();
+            StatsBtn.Click += actionHandler.StatsBtn_Click;
+            PlanningRB.Checked += actionHandler.PlanningRB_Checked;
+            ReportingRB.Checked += actionHandler.ReportingRB_Checked;
         }
 
-        private void Window_Closing(object sender,
-        System.ComponentModel.CancelEventArgs e)
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             MessageBox.Show("Click \"OK\" and wait a moment. \nData saving will take about 10 seconds.");
 
@@ -49,5 +50,4 @@ namespace TimeManager
             DB.Access.GetInstance().On_Window_Closing();
         }
     }
-
 }

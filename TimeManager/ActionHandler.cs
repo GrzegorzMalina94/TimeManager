@@ -4,14 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Media;
 
 namespace TimeManager
 {
+    public enum QrtrsMrkngMode { Planning, Reporting }
+
     class ActionHandler
     {
-        //------------------------- FIELDS DECLARATION AND PROPERTIES --------------------------------------------------------------------------------------
+        //------------------------- FIELDS DECLARATION AND PROPERTIES ------------------------------------------------------------------------
         private static ActionHandler _instance;
+        private QrtrsMrkngMode _mode;
         ActivitiesManager _activitiesManager;
         IState _currentState;
         IState _defaultState;
@@ -53,13 +57,22 @@ namespace TimeManager
 
 
 
-        //-------------------------- METHODS HANDLING BUTTON AND ACTIVITIES CLICKS ----------------------------------------------------------
+        //-------------------------- METHODS HANDLING BUTTONS, RADIOBUTTONS AND ACTIVITIES CLICKS --------------------------------
+        public void ActivityControl_Click(object sender, RoutedEventArgs e)
+        {
+            _currentState.ActivityControl_Click(sender);
+        }
+
         public void AddActivityBtn_Click(object sender, RoutedEventArgs e)
         {
             ActivityInputBox activityInputBox = new ActivityInputBox();
             if (activityInputBox.ShowDialog() == true)
             {
-                _activitiesManager.AddActivity(activityInputBox.GivenName, activityInputBox.ChosenColor);                
+                if(activityInputBox.GivenName.Length <= 40)
+                    _activitiesManager.AddActivity(activityInputBox.GivenName, activityInputBox.ChosenColor);
+                else
+                    System.Windows.Forms.MessageBox.Show("Name of activity cannot include more than 40 characters.",
+                        "Adding activity failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -67,37 +80,70 @@ namespace TimeManager
         {
             _activitiesManager.RemoveSelectedActivity();
         }
-
-        public void ActivityControl_Click(object sender, RoutedEventArgs e)
+        
+        public void StatsBtn_Click(object sender, RoutedEventArgs e)
         {
-            _currentState.ActivityControl_Click(sender);
+            StatisticsWindow statisticsWindow = new StatisticsWindow();
+            statisticsWindow.ShowDialog();
+        }
+
+        public void PlanningRB_Checked(object sender, RoutedEventArgs e)
+        {
+            _mode = QrtrsMrkngMode.Planning;
+        }
+
+        public void ReportingRB_Checked(object sender, RoutedEventArgs e)
+        {
+            _mode = QrtrsMrkngMode.Reporting;
         }
 
 
 
-        //-------------------------- METHODS CONCERNING DIRECTLY _selectedQuarters LIST -----------------------------------------------------
-        public void AddToSelection(Quarter selectedQuarter)
+        //-------------------------- METHODS CONCERNING DIRECTLY _selectedQuarters LIST -------------------------------
+        /// <summary>
+        /// Adds given quarter to _selectedQuarter list if this list does not contain given quarter.
+        /// </summary>
+        /// <param name="selectedQuarter">Quarter described as 'given quarter' in summary.</param>
+        public void ConditionallyAddToSelection(Quarter selectedQuarter)
         {
+            if(!_selectedQuarters.Contains(selectedQuarter))
             _selectedQuarters.Add(selectedQuarter);
         }
 
-        public void ColourSelectedQuarters(string activityName)
+        public void AssignActivityToSelectedQuarters(string activityName)
         {
             foreach (Quarter quarter in _selectedQuarters)
-                quarter.AssignedActivity = _activitiesManager.GetActivity(activityName);
+            {
+                Activity desiredActivity = _activitiesManager.GetActivity(activityName);
+                if (_mode == QrtrsMrkngMode.Planning)
+                {
+                    Activity prevActivity = quarter.PlannedActivity;
+                    prevActivity.DeleteQuarterFromPlan(quarter.Identifier);
+                    quarter.PlannedActivity = desiredActivity;
+                    desiredActivity.AssignQuarterToPlan(quarter.Identifier);
+                }
+                else
+                {
+                    Activity prevActivity = quarter.RealActivity;
+                    prevActivity.DeleteQuarterFromReport(quarter.Identifier);
+                    quarter.RealActivity = desiredActivity;
+                    desiredActivity.AssignQuarterToReport(quarter.Identifier);
+                }
+
+            }
             _currentState = _defaultState;
         }
 
         public void DeleteSelection()
         {
             foreach (Quarter quarter in _selectedQuarters)
-                quarter.RemoveFrame();
+                quarter.SetStandardFrame();
             _selectedQuarters.RemoveAll(quarter => quarter != null);
         }
+        
 
 
-
-        //-------------------------- METHODS HANDLING MOUSE EVENTS CONCERNING SELECTION -----------------------------------------------------
+        //-------------------------- METHODS HANDLING MOUSE EVENTS CONCERNING SELECTION -------------------------------
         public void WeekGrid_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
             _currentState.WeekGrid_MouseLeave();
@@ -106,9 +152,9 @@ namespace TimeManager
         public void QuarterRectangle_MouseLeftButtonDown(Quarter quarterSender)
         {
             SetSIPstate();
-            
-            AddToSelection(quarterSender);
-            quarterSender.AddFrame();
+
+            ConditionallyAddToSelection(quarterSender);
+            quarterSender.SetSelectionFrame();
         }
 
         public void QuarterRectangle_MouseEnter(Quarter quarterSender)
@@ -123,7 +169,7 @@ namespace TimeManager
 
 
 
-        //-------------------------- METHODS TO SET PARTICULAR STATES -----------------------------------------------------------------------
+        //-------------------------- METHODS TO SET PARTICULAR STATES -------------------------------------------------
         public void SetDefaultState()
         {
             _currentState = _defaultState;
@@ -142,10 +188,16 @@ namespace TimeManager
             _currentState.OnEnter();
         }
 
-        //TEST -------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        //-------------------------- OTHER ----------------------------------------------------------------------------
+       
+
+
+
+        //TEST --------------------------------------------------------------------------------------------------------
         public void TestBtn_Click(object sender, RoutedEventArgs e)
         {
-            ActivitiesManager.NullActivity.SquareColor = new SolidColorBrush(Colors.Red);
+            
         }
     }
 }

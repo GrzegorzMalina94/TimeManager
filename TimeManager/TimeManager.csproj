@@ -91,11 +91,15 @@
       <DependentUpon>ActivityInputBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="DB\Access.cs" />
+    <Compile Include="QuarterIdentifier.cs" />
     <Compile Include="States\Default.cs" />
     <Compile Include="States\IState.cs" />
     <Compile Include="Quarter.cs" />
     <Compile Include="States\QuartersSelected.cs" />
     <Compile Include="States\SelectionInProgress.cs" />
+    <Compile Include="StatisticsWindow.xaml.cs">
+      <DependentUpon>StatisticsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Week.cs" />
     <Page Include="ArroundActivities\ActivityControl.xaml">
       <SubType>Designer</SubType>
@@ -122,6 +126,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="StatisticsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
