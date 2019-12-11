@@ -23,18 +23,7 @@ namespace TimeManager
         {
             InitializeComponent();
             List<Activity> activities = ActivitiesManager.GetInstance().Activities;
-            foreach(Activity activity in activities)
-            {
-                bool firstActivity = activity == activities.First();
-
-                ActivityControl activityLabel = PrepareLabel(activity, firstActivity) as ActivityControl;
-                Label QrtQntAccToPln = PrepareLabel(activity.GetNumberToPlanAssignedQuarters(), firstActivity) as Label;
-                Label QrtsQnttInRlty = PrepareLabel(activity.GetNumberToReportAssignedQuarters(), firstActivity) as Label;
-
-                ActivityName.Children.Add(activityLabel);
-                QrtsQnttyPlnnd.Children.Add(QrtQntAccToPln);
-                QrtsQnttyRlty.Children.Add(QrtsQnttInRlty);
-            }
+            PrepareMainContent(DBAccess.GetInstance(), activities, Week.GetInstance().CurrentWeek);
         }
 
         /// <summary>
@@ -85,6 +74,22 @@ namespace TimeManager
                 }
                 newLabel.BorderThickness = borderThickness;
                 return newLabel;
+            }
+        }
+
+        void PrepareMainContent(DBAccess dbAccess, List<Activity> activities, byte week)
+        {
+            foreach (Activity activity in activities)
+            {
+                bool firstActivity = activity == activities.First();
+
+                ActivityControl activityLabel = PrepareLabel(activity, firstActivity) as ActivityControl;
+                Label QrtQntAccToPln = (Label)PrepareLabel(dbAccess.CountActivityAppearences(activity, QrtrsMrkngMode.Planning, week), firstActivity);
+                Label QrtsQnttInRlty = (Label)PrepareLabel(dbAccess.CountActivityAppearences(activity, QrtrsMrkngMode.Reporting, week), firstActivity);
+
+                ActivityName.Children.Add(activityLabel);
+                QrtsQnttyPlnnd.Children.Add(QrtQntAccToPln);
+                QrtsQnttyRlty.Children.Add(QrtsQnttInRlty);
             }
         }
     }

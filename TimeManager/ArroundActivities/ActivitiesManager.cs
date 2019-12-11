@@ -94,8 +94,6 @@ namespace TimeManager
             {
                 Activity selectedActivity = GetActivity(_selectedAC.ActivityName);
                 _activitiesPanel.Children.Remove(_selectedAC);
-                _week.NullAssigment(QrtrsMrkngMode.Planning, selectedActivity.GetIdsToPlanAssignedQuarters());
-                _week.NullAssigment(QrtrsMrkngMode.Reporting, selectedActivity.GetIdsToReportAssignedQuarters());
                 _activities.Remove(selectedActivity);
                 _selectedAC = null;
             }
@@ -125,7 +123,7 @@ namespace TimeManager
 
         public Activity GetActivity(string activityName)
         {
-            //desiredActivity list will be list with one element
+            //desiredActivity list should be list with one element
             List<Activity> desiredActivity = _activities.Where(activity => activity.Name == activityName).ToList();
             if (desiredActivity.Count() > 0)
             {

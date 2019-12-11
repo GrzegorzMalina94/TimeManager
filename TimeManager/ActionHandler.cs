@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Media;
 
@@ -14,6 +15,7 @@ namespace TimeManager
     class ActionHandler
     {
         //------------------------- FIELDS DECLARATION AND PROPERTIES ------------------------------------------------------------------------
+        bool _weekChngInPrgrss = false;
         private static ActionHandler _instance;
         private QrtrsMrkngMode _mode;
         ActivitiesManager _activitiesManager;
@@ -21,6 +23,7 @@ namespace TimeManager
         IState _defaultState;
         IState _QSstate;
         IState _SIPstate;
+        Week _week;
 
         private List<Quarter> _selectedQuarters = new List<Quarter>();
 
@@ -47,6 +50,7 @@ namespace TimeManager
         public void Start(ActivitiesManager activitiesManager)
         {
             _activitiesManager = activitiesManager;
+            _week = Week.GetInstance();
 
             _defaultState = new States.Default(activitiesManager);
             _QSstate = new States.QuartersSelected();
@@ -57,7 +61,7 @@ namespace TimeManager
 
 
 
-        //-------------------------- METHODS HANDLING BUTTONS, RADIOBUTTONS AND ACTIVITIES CLICKS --------------------------------
+        //------------------- METHODS CONCERNING ADDING, CLICKING AND REMOVING ACTIVITYCONTROLS -----------------------
         public void ActivityControl_Click(object sender, RoutedEventArgs e)
         {
             _currentState.ActivityControl_Click(sender);
@@ -79,22 +83,7 @@ namespace TimeManager
         public void RemoveActivityBtn_Click(object sender, RoutedEventArgs e)
         {
             _activitiesManager.RemoveSelectedActivity();
-        }
-        
-        public void StatsBtn_Click(object sender, RoutedEventArgs e)
-        {
-            StatisticsWindow statisticsWindow = new StatisticsWindow();
-            statisticsWindow.ShowDialog();
-        }
-
-        public void PlanningRB_Checked(object sender, RoutedEventArgs e)
-        {
-            _mode = QrtrsMrkngMode.Planning;
-        }
-
-        public void ReportingRB_Checked(object sender, RoutedEventArgs e)
-        {
-            _mode = QrtrsMrkngMode.Reporting;
+            _week.Update();
         }
 
 
@@ -112,24 +101,17 @@ namespace TimeManager
 
         public void AssignActivityToSelectedQuarters(string activityName)
         {
+            Activity desiredActivity = _activitiesManager.GetActivity(activityName);
             foreach (Quarter quarter in _selectedQuarters)
             {
-                Activity desiredActivity = _activitiesManager.GetActivity(activityName);
                 if (_mode == QrtrsMrkngMode.Planning)
                 {
-                    Activity prevActivity = quarter.PlannedActivity;
-                    prevActivity.DeleteQuarterFromPlan(quarter.Identifier);
                     quarter.PlannedActivity = desiredActivity;
-                    desiredActivity.AssignQuarterToPlan(quarter.Identifier);
                 }
                 else
                 {
-                    Activity prevActivity = quarter.RealActivity;
-                    prevActivity.DeleteQuarterFromReport(quarter.Identifier);
                     quarter.RealActivity = desiredActivity;
-                    desiredActivity.AssignQuarterToReport(quarter.Identifier);
                 }
-
             }
             _currentState = _defaultState;
         }
@@ -190,7 +172,43 @@ namespace TimeManager
 
 
         //-------------------------- OTHER ----------------------------------------------------------------------------
-       
+        public void StatsBtn_Click(object sender, RoutedEventArgs e)
+        {
+            _week.SaveData();
+            StatisticsWindow statisticsWindow = new StatisticsWindow();
+            statisticsWindow.ShowDialog();
+        }
+
+        public void PlanningRB_Checked(object sender, RoutedEventArgs e)
+        {
+            _mode = QrtrsMrkngMode.Planning;
+        }
+
+        public void ReportingRB_Checked(object sender, RoutedEventArgs e)
+        {
+            _mode = QrtrsMrkngMode.Reporting;
+        }
+
+        public void WeekComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!_weekChngInPrgrss)
+            {
+                _weekChngInPrgrss = true;
+                string message = "Are you sure that you want change week to another week?";
+                string title = "Change of week - Ackonwledgement";
+                DialogResult MssgBoxResult = System.Windows.Forms.MessageBox.Show(message, title, MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                if (MssgBoxResult == DialogResult.OK)
+                {
+                    _week.SaveData();
+                    _week.Update();
+                }
+                else
+                {
+                    (sender as System.Windows.Controls.ComboBox).SelectedItem = e.RemovedItems[0];
+                }
+                _weekChngInPrgrss = false;
+            }
+        }
 
 
 

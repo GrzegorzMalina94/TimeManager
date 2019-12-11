@@ -13,16 +13,11 @@ namespace TimeManager
     {
         string _name;
         byte R, G, B;
-        List<QuarterIdentifier> _planQrtsIds;
-        List<QuarterIdentifier> _reportQrtsIds;
-
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         public Activity(String name, Color color)
         {
-            _planQrtsIds = new List<QuarterIdentifier>();
-            _reportQrtsIds = new List<QuarterIdentifier>();
             _name = name;
             R = color.R;
             G = color.G;
@@ -72,62 +67,6 @@ namespace TimeManager
                     NotifyPropertyChanged();
                 }                
             }
-        }
-
-
-
-        public void AssignQuarterToPlan(QuarterIdentifier qIdentifier)
-        {
-            _planQrtsIds.Add(qIdentifier);
-        }
-
-
-
-        public void AssignQuarterToReport(QuarterIdentifier qIdentifier)
-        {
-            _reportQrtsIds.Add(qIdentifier);
-        }
-
-
-
-        public void DeleteQuarterFromPlan(QuarterIdentifier qIdentifier)
-        {
-            _planQrtsIds.RemoveAll(qId => qId == qIdentifier);
-        }
-
-
-
-        public void DeleteQuarterFromReport(QuarterIdentifier qIdentifier)
-        {
-            _reportQrtsIds.RemoveAll(qId => qId == qIdentifier);
-        }
-
-
-
-        public List<QuarterIdentifier> GetIdsToPlanAssignedQuarters()
-        {
-            return _planQrtsIds;
-        }
-
-
-
-        public List<QuarterIdentifier> GetIdsToReportAssignedQuarters()
-        {
-            return _reportQrtsIds;
-        }
-
-
-
-        public int GetNumberToPlanAssignedQuarters()
-        {
-            return _planQrtsIds.Count();
-        }
-
-
-
-        public int GetNumberToReportAssignedQuarters()
-        {
-            return _reportQrtsIds.Count();
         }
     }
 }

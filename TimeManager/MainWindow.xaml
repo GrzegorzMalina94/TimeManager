@@ -93,18 +93,20 @@
                 <StackPanel Grid.ColumnSpan="5">
                  <Button Name="StatsBtn" Content="Statistics" FontSize="16" Height="25" 
                         VerticalAlignment="Top" Margin="0,10" HorizontalAlignment="Center" Width="140" />
+                    <Label FontWeight="Bold" FontSize="18">Week:</Label>
+                    <ComboBox Name="WeekComboBox" HorizontalAlignment="Center" VerticalAlignment="Center" Width="120" />
                     <Label Content="Mode:" FontWeight="Bold" FontSize="18" />
                     <RadioButton GroupName="ModeRB" Name="PlanningRB" Content="Planning" Margin="0,3" FontSize="15" 
-                                 IsChecked="True" />
+                                 IsChecked="True" HorizontalAlignment="Center" />
                     <RadioButton GroupName="ModeRB" Name="ReportingRB" Content="Reporting" Margin="0,3" FontSize="15"
-                                 />
+                                 HorizontalAlignment="Center" />
                 </StackPanel>
                 <Button Name="TestBtn" Content="Test" Grid.Row="1" Grid.ColumnSpan="5" Height="25" 
                         VerticalAlignment="Center" HorizontalAlignment="Center" Width="152" />
                 <Button Name="AddActivityBtn" Content="Add" Grid.Column="1" Grid.Row="2" Height="25" Width="50" 
                         VerticalAlignment="Bottom" HorizontalAlignment="Left" />
                 <Button Name="RemoveActivityBtn" Content="Remove" Grid.Column="3" Grid.Row="2" Height="25" Width="50"
-                        VerticalAlignment="Bottom" HorizontalAlignment="Right" />                
+                        VerticalAlignment="Bottom" HorizontalAlignment="Right" />
             </Grid>
         </Grid>        
         <Label HorizontalAlignment="Left" Grid.ColumnSpan="2" Grid.Row="2" Height="Auto" VerticalAlignment="Center"

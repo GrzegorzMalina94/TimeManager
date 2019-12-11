@@ -39,9 +39,9 @@ namespace TimeManager
             {
                 for (byte i = 0; i < 96; i++)
                 {
-                    Activity plannedAactivity = _activitiesManager.GetActivity(plan[i] != null ? plan[i] : "Nothing");
-                    Activity reportedActivity = _activitiesManager.GetActivity(report[i] != null ? report[i] : "Nothing");
-                    _quarters[i] = new Quarter(PrepareQuartersArea(), plannedAactivity, reportedActivity, new QuarterIdentifier(_id, i));                  
+                    Activity plannedActivity = _activitiesManager.GetActivity(plan[i]);
+                    Activity reportedActivity = _activitiesManager.GetActivity(report[i]);
+                    _quarters[i] = new Quarter(PrepareQuartersArea(), plannedActivity, reportedActivity, new QuarterIdentifier(_id, i));                  
                 }
             }
             else // When any data wasn't taken from database.
@@ -55,25 +55,61 @@ namespace TimeManager
             
         }
 
-        public string[] GetDayPlan()
+        public string[] DayPlan
         {
-            string[] dayPlan = new string[96];
+            get
+            {
+                string[] dayPlan = new string[96];
 
-            for (int i = 0; i < 96; i++)
-                dayPlan[i] = _quarters[i].PlannedActivity.Name;
+                for (int i = 0; i < 96; i++)
+                    dayPlan[i] = _quarters[i].PlannedActivity.Name;
 
-            return dayPlan;
+                return dayPlan;
+            }
+
+            set
+            {
+                if (value.Length == 96)
+                {
+                    for (int i = 0; i < 96; i++)
+                    {
+                        _quarters[i].PlannedActivity = _activitiesManager.GetActivity(value[i]);
+                    }                       
+                }
+                else
+                {
+                    throw new ArgumentException("Parameter (array) must have length amounting to 96.", "value");
+                }
+            }
         }
 
-        public string[] GetDayReport()
+        public string[] DayReport
         {
-            string[] dayReport = new string[96];
+            get
+            {
+                string[] dayReport = new string[96];
 
-            for (int i = 0; i < 96; i++)
-                dayReport[i] = _quarters[i].RealActivity.Name;
+                for (int i = 0; i < 96; i++)
+                    dayReport[i] = _quarters[i].RealActivity.Name;
 
-            return dayReport;
-        }
+                return dayReport;
+            }
+
+            set
+            {
+                if (value.Length == 96)
+                {
+                    for (int i = 0; i < 96; i++)
+                    {
+                        _quarters[i].RealActivity = _activitiesManager.GetActivity(value[i]);
+                    }
+                }
+                else
+                {
+                    throw new ArgumentException("Parameter (array) must have length amounting to 96.", "value");
+                }
+            }
+        }        
 
         StackPanel PrepareQuartersArea()
         {
@@ -91,23 +127,6 @@ namespace TimeManager
         internal Quarter GetQuarter(byte quarterNumber)
         {
             return _quarters[quarterNumber];
-        }
-
-        public void NullAssigment(QrtrsMrkngMode markingMode, byte qrtNumber)
-        {
-            switch(markingMode)
-            {
-                case QrtrsMrkngMode.Planning:
-                    _quarters[qrtNumber].PlannedActivity = ActivitiesManager.NullActivity;
-                    break;
-                case QrtrsMrkngMode.Reporting:
-                    _quarters[qrtNumber].RealActivity = ActivitiesManager.NullActivity;
-                    break;
-                default:
-                    _quarters[qrtNumber].PlannedActivity = ActivitiesManager.NullActivity;
-                    break;
-            }
-            
         }
     }
 }
