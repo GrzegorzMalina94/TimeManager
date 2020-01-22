@@ -5,112 +5,145 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TimeManager"        
         mc:Ignorable="d"
-        Title="MainWindow" WindowState="Maximized" Closing="Window_Closing" ResizeMode="CanMinimize" >
+        Title="MainWindow" Background="#cccccc" Closing="Window_Closing" WindowState="Maximized" ResizeMode="CanMinimize" >
     <Grid Name="mainGrid">
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50"/>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="7*"/>
+            <ColumnDefinition Width="25"/>
             <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="50"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="7*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Label Content="Time Manager" Grid.ColumnSpan="3" HorizontalAlignment="Center" Height="Auto" 
+        <Label Content="Time Manager" Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Center" Height="Auto" 
                VerticalAlignment="Center" Margin="0,10" Width="Auto" FontFamily="Times New Roman" FontSize="48"/>
-        <Label Content="v. 1.0" Grid.ColumnSpan="3" HorizontalAlignment="Right" Height="Auto" VerticalAlignment="Center"
-               Margin="0,0,50,0" Width="Auto" FontFamily="Times New Roman" FontSize="48"/>
-        <ScrollViewer Grid.ColumnSpan="2" Height="Auto" Grid.Row="1" Width="Auto">
-            <Grid Name="centralGrid">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="7*"/>
-                </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="0" Grid.Row="1">
-                    <Label Content="Day" Height="25" HorizontalContentAlignment="Center" FontSize="12" />
-                    <Label Content="00 : 00" Style="{StaticResource TimeLineLabel}"/>
-                    <Label Content="01 : 00" Style="{StaticResource TimeLineLabel}"/>
-                    <Label Content="02 : 00" Style="{StaticResource TimeLineLabel}"/>
-                    <Label Content="03 : 00" Style="{StaticResource TimeLineLabel}"/>
-                    <Label Content="04 : 00" Style="{StaticResource TimeLineLabel}"/>
-                    <Label Content="05 : 00" Style="{StaticResource TimeLineLabel}"/>
-                    <Label Content="06 : 00" Style="{StaticResource TimeLineLabel}"/>
-                    <Label Content="07 : 00" Style="{StaticResource TimeLineLabel}"/>
-                    <Label Content="08 : 00" Style="{StaticResource TimeLineLabel}"/>
-                    <Label Content="09 : 00" Style="{StaticResource TimeLineLabel}"/>
-                    <Label Content="10 : 00" Style="{StaticResource TimeLineLabel}"/>
-                    <Label Content="11 : 00" Style="{StaticResource TimeLineLabel}"/>
-                    <Label Content="12 : 00" Style="{StaticResource TimeLineLabel}"/>
-                    <Label Content="13 : 00" Style="{StaticResource TimeLineLabel}"/>
-                    <Label Content="14 : 00" Style="{StaticResource TimeLineLabel}"/>
-                    <Label Content="15 : 00" Style="{StaticResource TimeLineLabel}"/>
-                    <Label Content="16 : 00" Style="{StaticResource TimeLineLabel}"/>
-                    <Label Content="17 : 00" Style="{StaticResource TimeLineLabel}"/>
-                    <Label Content="18 : 00" Style="{StaticResource TimeLineLabel}"/>
-                    <Label Content="19 : 00" Style="{StaticResource TimeLineLabel}"/>
-                    <Label Content="20 : 00" Style="{StaticResource TimeLineLabel}"/>
-                    <Label Content="21 : 00" Style="{StaticResource TimeLineLabel}"/>
-                    <Label Content="22 : 00" Style="{StaticResource TimeLineLabel}"/>
-                    <Label Content="23 : 00" Style="{StaticResource TimeLineLabel}"/>
-                </StackPanel>
-                <Grid Name="WeekGrid" Grid.Column="1" Grid.Row="1">
+        <Label Content="v. 1.0" Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Right" Height="Auto" 
+               VerticalAlignment="Center" Margin="0,0,50,0" Width="Auto" FontFamily="Times New Roman" FontSize="48"/>
+        <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="17"/>
+            </Grid.ColumnDefinitions>
+            <Border BorderBrush="Black" BorderThickness="1,1,1,1" Grid.Column="0" >
+                <Label Content="Hour \ Day" Height="25" HorizontalContentAlignment="Center" FontSize="12" />
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="1" Grid.Column="1" >
+                <Label Content="Monday" Grid.Column="1" Height="25" HorizontalContentAlignment="Center" FontSize="12" />
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="1" Grid.Column="2" >
+                <Label Content="Tuesday" Grid.Column="2" Height="25" HorizontalContentAlignment="Center" FontSize="12" />
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="1" Grid.Column="3" >
+                <Label Content="Wednseday" Grid.Column="3" Height="25" HorizontalContentAlignment="Center" FontSize="12" />
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="1" Grid.Column="4" >
+                <Label Content="Thursday" Grid.Column="4" Height="25" HorizontalContentAlignment="Center" FontSize="12" />
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="1" Grid.Column="5" >
+                <Label Content="Friday" Grid.Column="5" Height="25" HorizontalContentAlignment="Center" FontSize="12" />
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="1" Grid.Column="6" >
+                <Label Content="Saturday" Height="25" HorizontalContentAlignment="Center" FontSize="12" />
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="1" Grid.Column="7" >
+                <Label Content="Sunday" Height="25" HorizontalContentAlignment="Center" FontSize="12" />
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="1" Grid.Column="8" >
+                <Rectangle Fill="#a0a0a0" />
+            </Border>
+        </Grid>
+        <Border BorderBrush="Black" BorderThickness="1" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2">
+        <ScrollViewer Grid.ColumnSpan="2" Grid.Column="1" Height="Auto" 
+                      Grid.Row="2" Width="Auto">
+                <Grid Name="centralGrid">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="7*"/>
                     </Grid.ColumnDefinitions>
+                    <Border BorderBrush="Black" BorderThickness="0,0,1,0">
+                        <StackPanel Background="White">                    
+                            <Label Content="00 : 00" BorderThickness="0,1,0,0" Style="{StaticResource TimeLineLabel}"/>
+                            <Label Content="01 : 00" Style="{StaticResource TimeLineLabel}"/>
+                            <Label Content="02 : 00" Style="{StaticResource TimeLineLabel}"/>
+                            <Label Content="03 : 00" Style="{StaticResource TimeLineLabel}"/>
+                            <Label Content="04 : 00" Style="{StaticResource TimeLineLabel}"/>
+                            <Label Content="05 : 00" Style="{StaticResource TimeLineLabel}"/>
+                            <Label Content="06 : 00" Style="{StaticResource TimeLineLabel}"/>
+                            <Label Content="07 : 00" Style="{StaticResource TimeLineLabel}"/>
+                            <Label Content="08 : 00" Style="{StaticResource TimeLineLabel}"/>
+                            <Label Content="09 : 00" Style="{StaticResource TimeLineLabel}"/>
+                            <Label Content="10 : 00" Style="{StaticResource TimeLineLabel}"/>
+                            <Label Content="11 : 00" Style="{StaticResource TimeLineLabel}"/>
+                            <Label Content="12 : 00" Style="{StaticResource TimeLineLabel}"/>
+                            <Label Content="13 : 00" Style="{StaticResource TimeLineLabel}"/>
+                            <Label Content="14 : 00" Style="{StaticResource TimeLineLabel}"/>
+                            <Label Content="15 : 00" Style="{StaticResource TimeLineLabel}"/>
+                            <Label Content="16 : 00" Style="{StaticResource TimeLineLabel}"/>
+                            <Label Content="17 : 00" Style="{StaticResource TimeLineLabel}"/>
+                            <Label Content="18 : 00" Style="{StaticResource TimeLineLabel}"/>
+                            <Label Content="19 : 00" Style="{StaticResource TimeLineLabel}"/>
+                            <Label Content="20 : 00" Style="{StaticResource TimeLineLabel}"/>
+                            <Label Content="21 : 00" Style="{StaticResource TimeLineLabel}"/>
+                            <Label Content="22 : 00" Style="{StaticResource TimeLineLabel}"/>
+                            <Label Content="23 : 00" Style="{StaticResource TimeLineLabel}"/>
+                        </StackPanel>
+                    </Border>
+                    <Grid Name="WeekGrid" Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                    </Grid>
                 </Grid>
-            </Grid>
-        </ScrollViewer>
-        <Grid Grid.Column="2" Grid.Row="1" >
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <Label Content="Activities:" FontWeight="Bold" FontSize="18"/>
-            <ScrollViewer Grid.Row="1" Height="Auto" Width="Auto">
-                <StackPanel Name="ActivitiesPanel" Margin="0,0,0,25" />                
             </ScrollViewer>
-            <Grid Grid.Row="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="2*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="6*"/>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="2*"/>
-                </Grid.RowDefinitions>
-                <StackPanel Grid.ColumnSpan="5">
-                 <Button Name="StatsBtn" Content="Statistics" FontSize="16" Height="25" 
-                        VerticalAlignment="Top" Margin="0,10" HorizontalAlignment="Center" Width="140" />
-                    <Label FontWeight="Bold" FontSize="18">Week:</Label>
-                    <ComboBox Name="WeekComboBox" HorizontalAlignment="Center" VerticalAlignment="Center" Width="120" />
-                    <Label Content="Mode:" FontWeight="Bold" FontSize="18" />
-                    <RadioButton GroupName="ModeRB" Name="PlanningRB" Content="Planning" Margin="0,3" FontSize="15" 
-                                 IsChecked="True" HorizontalAlignment="Center" />
-                    <RadioButton GroupName="ModeRB" Name="ReportingRB" Content="Reporting" Margin="0,3" FontSize="15"
-                                 HorizontalAlignment="Center" />
+        </Border>
+        <StackPanel Background="#cccccc" Grid.Column="4" Grid.Row="2">
+            <Border BorderThickness="1,1,3,1" BorderBrush="Black" Margin="10,0,0,0">
+                <StackPanel Background="#ffffff">
+                    <Border BorderBrush="Black" BorderThickness="0,0,0,1">
+                        <Label Content="Activities:" FontWeight="Bold" FontSize="18"/>
+                    </Border>
+                    <ScrollViewer Height="250" Margin="0,5,0,0" Width="Auto">
+                        <StackPanel Name="ActivitiesPanel" Margin="0,0,0,25" />
+                    </ScrollViewer>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Name="AddActivityBtn" Content="Add" Height="25" Margin="10"
+                        Width="50" />
+                        <Button Name="RemoveActivityBtn" Content="Remove" Height="25" Margin="10" 
+                        Width="50" />
+                    </StackPanel>
                 </StackPanel>
-                <Button Name="TestBtn" Content="Test" Grid.Row="1" Grid.ColumnSpan="5" Height="25" 
-                        VerticalAlignment="Center" HorizontalAlignment="Center" Width="152" />
-                <Button Name="AddActivityBtn" Content="Add" Grid.Column="1" Grid.Row="2" Height="25" Width="50" 
-                        VerticalAlignment="Bottom" HorizontalAlignment="Left" />
-                <Button Name="RemoveActivityBtn" Content="Remove" Grid.Column="3" Grid.Row="2" Height="25" Width="50"
-                        VerticalAlignment="Bottom" HorizontalAlignment="Right" />
-            </Grid>
-        </Grid>        
-        <Label HorizontalAlignment="Left" Grid.ColumnSpan="2" Grid.Row="2" Height="Auto" VerticalAlignment="Center"
-               Margin="100,10,0,10" Width="Auto" FontFamily="Times New Roman" FontSize="32">
+            </Border>
+            <Button Name="StatsBtn" Content="Statistics" FontSize="16" FontWeight="SemiBold" Height="25" Margin="0, 25, 0, 10"
+                    Width="140" />
+            <Label FontWeight="Bold" FontSize="18">Week:</Label>
+            <ComboBox Name="WeekComboBox" HorizontalAlignment="Center" Margin="0, 0, 0, 10" VerticalAlignment="Center" Width="120" />
+            <Label Content="Mode:" FontWeight="Bold" FontSize="18" />
+            <RadioButton GroupName="ModeRB" Name="PlanningRB" Content="Planning" Margin="0,3" FontSize="15" 
+                                 IsChecked="True" HorizontalAlignment="Center" />
+            <RadioButton GroupName="ModeRB" Name="ReportingRB" Content="Reporting" Margin="0,3" FontSize="15"
+                                 HorizontalAlignment="Center" />
+        </StackPanel>
+        <Label HorizontalAlignment="Left" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="3" Height="Auto" VerticalAlignment="Center"
+               Margin="50,10,0,10" Width="Auto" FontFamily="Times New Roman" FontSize="32">
             <Span>Made by:
                 <Bold>Gregor</Bold>
             </Span>

@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace TimeManager
 {
     public enum QrtrsMrkngMode { Planning, Reporting }
+    public enum RemovingActivityCtrlErr { NothingActivityRemovingAttmpt, NoneActivitySelected, NoError }
 
     class ActionHandler
     {
@@ -26,8 +28,6 @@ namespace TimeManager
         Week _week;
 
         private List<Quarter> _selectedQuarters = new List<Quarter>();
-
-        
 
         //-------------------------- METHODS - ENSURING SINGLETON PATTERN -------------------------------------------------------------------
         private ActionHandler()
@@ -72,18 +72,60 @@ namespace TimeManager
             ActivityInputBox activityInputBox = new ActivityInputBox();
             if (activityInputBox.ShowDialog() == true)
             {
-                if(activityInputBox.GivenName.Length <= 40)
-                    _activitiesManager.AddActivity(activityInputBox.GivenName, activityInputBox.ChosenColor);
-                else
+                SolidColorBrush newActivityColour = activityInputBox.ChosenColor;
+                string newActivityName = activityInputBox.GivenName;
+                if (newActivityName.Length >= 40)
+                {
                     System.Windows.Forms.MessageBox.Show("Name of activity cannot include more than 40 characters.",
                         "Adding activity failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                if (_activitiesManager.IsColourBusy(newActivityColour))
+                {
+                    System.Windows.Forms.MessageBox.Show("Chosen colour is occupied, please select another.", "Color " +
+                        "is occupied", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                if (_activitiesManager.IsNameBusy(newActivityName))
+                {
+                    System.Windows.Forms.MessageBox.Show("Chosen name is occupied, please type another.", "Name is " +
+                        "occupied", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                if (newActivityName.Equals("Nothing"))
+                {
+                    System.Windows.Forms.MessageBox.Show("\"Nothing\" is a special word in this programme and can not " +
+                        "be used as an activity name.", "Wrong activity name!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                    _activitiesManager.AddActivity(newActivityName, newActivityColour); 
             }
         }
 
         public void RemoveActivityBtn_Click(object sender, RoutedEventArgs e)
         {
-            _activitiesManager.RemoveSelectedActivity();
-            _week.Update();
+            RemovingActivityCtrlErr error = _activitiesManager.RemoveSelectedActivity();
+            switch(error)
+            {
+                case RemovingActivityCtrlErr.NoError:
+                {
+                    _week.SaveData();
+                    _week.UpdateView();
+                    break;
+                }
+                case RemovingActivityCtrlErr.NoneActivitySelected:
+                {
+                    System.Windows.Forms.MessageBox.Show("None of activities has been selected!", "None activity " +
+                        "selected", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    break;
+                }
+                case RemovingActivityCtrlErr.NothingActivityRemovingAttmpt:
+                {
+                    System.Windows.Forms.MessageBox.Show("You cannot delete \"Nothing\" pseudoactivity!", "Attempt" +
+                        " to remove \"Nothing\"", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    break;
+                }
+            }            
         }
 
 
@@ -95,7 +137,7 @@ namespace TimeManager
         /// <param name="selectedQuarter">Quarter described as 'given quarter' in summary.</param>
         public void ConditionallyAddToSelection(Quarter selectedQuarter)
         {
-            if(!_selectedQuarters.Contains(selectedQuarter))
+            if(_selectedQuarters.Contains(selectedQuarter) == false)
             _selectedQuarters.Add(selectedQuarter);
         }
 
@@ -133,10 +175,7 @@ namespace TimeManager
 
         public void QuarterRectangle_MouseLeftButtonDown(Quarter quarterSender)
         {
-            SetSIPstate();
-
-            ConditionallyAddToSelection(quarterSender);
-            quarterSender.SetSelectionFrame();
+            _currentState.QuarterRectangle_MouseLeftButtonDown(quarterSender);
         }
 
         public void QuarterRectangle_MouseEnter(Quarter quarterSender)
@@ -144,9 +183,14 @@ namespace TimeManager
             _currentState.QuarterRectangle_MouseEnter(quarterSender);
         }
 
-        public void QuarterRectangle_MouseLeftButtonUp()
+        public void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            SetQSstate();
+            _currentState.Window_MouseLeftButtonDown();
+        }
+
+        public void Window_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            _currentState.Window_MouseLeftButtonUp();
         }
 
 
@@ -200,7 +244,7 @@ namespace TimeManager
                 if (MssgBoxResult == DialogResult.OK)
                 {
                     _week.SaveData();
-                    _week.Update();
+                    _week.UpdateView();
                 }
                 else
                 {
@@ -208,14 +252,6 @@ namespace TimeManager
                 }
                 _weekChngInPrgrss = false;
             }
-        }
-
-
-
-        //TEST --------------------------------------------------------------------------------------------------------
-        public void TestBtn_Click(object sender, RoutedEventArgs e)
-        {
-            
         }
     }
 }

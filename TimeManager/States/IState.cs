@@ -12,8 +12,14 @@ namespace TimeManager
 
         void ActivityControl_Click(object sender);
 
-        void WeekGrid_MouseLeave();
+        void QuarterRectangle_MouseLeftButtonDown(Quarter quarterSender);
 
         void QuarterRectangle_MouseEnter(Quarter quarterSender);
+
+        void WeekGrid_MouseLeave();
+
+        void Window_MouseLeftButtonDown();
+
+        void Window_MouseLeftButtonUp();
     }
 }

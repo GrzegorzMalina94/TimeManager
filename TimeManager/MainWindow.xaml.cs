@@ -17,9 +17,9 @@ namespace TimeManager
 
             ActionHandler actionHandler = ActionHandler.GetInstance();
             ActivitiesManager activitiesManager = ActivitiesManager.GetInstance();
-            _week = Week.GetInstance();            
+            _week = Week.GetInstance();
             _dbAccess = DBAccess.GetInstance();
-            
+
             activitiesManager.Start(ActivitiesPanel, actionHandler, _week);
             actionHandler.Start(activitiesManager);
             _week.ActualInitialisation(WeekGrid, WeekComboBox);
@@ -30,8 +30,9 @@ namespace TimeManager
             ReportingRB.Checked += actionHandler.ReportingRB_Checked;
             AddActivityBtn.Click += actionHandler.AddActivityBtn_Click;
             RemoveActivityBtn.Click += actionHandler.RemoveActivityBtn_Click;
-            TestBtn.Click += actionHandler.TestBtn_Click;          
-        }   
+            MouseLeftButtonDown += actionHandler.Window_MouseLeftButtonDown;
+            MouseLeftButtonUp += actionHandler.Window_MouseLeftButtonUp;
+        }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {

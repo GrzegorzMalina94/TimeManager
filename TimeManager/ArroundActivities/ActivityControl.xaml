@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="28" d:DesignWidth="150" BorderBrush="Black">
     <WrapPanel>
-        <Rectangle Name="Square" Height="20" Width="20" Margin="15,4" Fill="DarkBlue"/>
+        <Rectangle Fill="DarkBlue" Height="20" Margin="15,4" Name="Square" Stroke="Black" StrokeThickness="1px" Width="20"/>
         <Label Name="ActivityLabel" MinWidth="100" FontFamily="Times New Roman" FontSize="12" />
     </WrapPanel>
 </UserControl>

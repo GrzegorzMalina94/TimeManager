@@ -92,6 +92,7 @@
     </Compile>
     <Compile Include="DBAccess.cs" />
     <Compile Include="QuarterIdentifier.cs" />
+    <Compile Include="SolidColorBrushComparer.cs" />
     <Compile Include="States\Default.cs" />
     <Compile Include="States\IState.cs" />
     <Compile Include="Quarter.cs" />
@@ -100,6 +101,7 @@
     <Compile Include="StatisticsWindow.xaml.cs">
       <DependentUpon>StatisticsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="VariousTools.cs" />
     <Compile Include="Week.cs" />
     <Page Include="ArroundActivities\ActivityControl.xaml">
       <SubType>Designer</SubType>

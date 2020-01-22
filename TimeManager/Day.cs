@@ -15,23 +15,13 @@ namespace TimeManager
         Quarter[] _quarters = new Quarter[96];
         StackPanel _dayStackPanel { get; set; }
         ActivitiesManager _activitiesManager;
-        string _name;
         byte _id;
 
         public Day(StackPanel dayStackPanel, string name, string[] plan, string[] report, byte id)
         {
             _dayStackPanel = dayStackPanel;
-            _name = name;
             _id = id;
             _activitiesManager = ActivitiesManager.GetInstance();
-            
-            //Creating header.
-            Label label = new Label();
-            label.Content = _name;
-            label.Height = 25;
-            label.HorizontalContentAlignment = HorizontalAlignment.Center;
-            label.FontSize = 12;
-            _dayStackPanel.Children.Add(label);
 
             //Creating all quarters:
             //When some data was taken from database.
@@ -41,7 +31,7 @@ namespace TimeManager
                 {
                     Activity plannedActivity = _activitiesManager.GetActivity(plan[i]);
                     Activity reportedActivity = _activitiesManager.GetActivity(report[i]);
-                    _quarters[i] = new Quarter(PrepareQuartersArea(), plannedActivity, reportedActivity, new QuarterIdentifier(_id, i));                  
+                    _quarters[i] = new Quarter(PrepareQuartersArea(), plannedActivity, reportedActivity, new QuarterIdentifier(_id, i));
                 }
             }
             else // When any data wasn't taken from database.
@@ -74,7 +64,7 @@ namespace TimeManager
                     for (int i = 0; i < 96; i++)
                     {
                         _quarters[i].PlannedActivity = _activitiesManager.GetActivity(value[i]);
-                    }                       
+                    }
                 }
                 else
                 {
@@ -109,7 +99,7 @@ namespace TimeManager
                     throw new ArgumentException("Parameter (array) must have length amounting to 96.", "value");
                 }
             }
-        }        
+        }
 
         StackPanel PrepareQuartersArea()
         {

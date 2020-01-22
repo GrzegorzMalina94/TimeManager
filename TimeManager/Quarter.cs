@@ -75,7 +75,6 @@ namespace TimeManager
             SetStandardFrame();
             _plnnActvtRctng.MouseLeftButtonDown += _quarterRectangle_MouseLeftButtonDown;
             _plnnActvtRctng.MouseEnter += _quarterRectangle_MouseEnter;
-            _plnnActvtRctng.MouseLeftButtonUp += _quarterRectangle_MouseLeftButtonUp;
         }
         
 
@@ -88,11 +87,6 @@ namespace TimeManager
         private void _quarterRectangle_MouseEnter(object sender, MouseEventArgs e)
         {
             _actionHandler.QuarterRectangle_MouseEnter(this);
-        }
-
-        private void _quarterRectangle_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            _actionHandler.QuarterRectangle_MouseLeftButtonUp();
         }
 
 
@@ -122,19 +116,19 @@ namespace TimeManager
             switch (Identifier.QuarterNumber % 4 )
             {
                 case 0:
-                    border.BorderThickness = new Thickness(0.5, 1, 0.5, 0.5);
+                    border.BorderThickness = new Thickness(1, 1, 1, 0.5);
                     break;
                 case 1:
-                    border.BorderThickness = new Thickness(0.5, 0.5, 0.5, 0.5);
+                    border.BorderThickness = new Thickness(1, 0.5, 1, 0.5);
                     break;
                 case 2:
-                    border.BorderThickness = new Thickness(0.5, 0.5, 0.5, 0.5);
+                    border.BorderThickness = new Thickness(1, 0.5, 1, 0.5);
                     break;
                 case 3:
-                    border.BorderThickness = new Thickness(0.5, 0.5, 0.5, 1);
+                    border.BorderThickness = new Thickness(1, 0.5, 1, 1);
                     break;
                 default:
-                    border.BorderThickness = new Thickness(0.5, 0.5, 0.5, 0.5);
+                    border.BorderThickness = new Thickness(1, 0.5, 1, 0.5);
                     break;
             }
         }

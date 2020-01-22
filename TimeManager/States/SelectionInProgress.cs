@@ -12,7 +12,7 @@ namespace TimeManager.States
 
         public void OnEnter()
         {
-            _actionHandler.DeleteSelection();
+            
         }
 
         public SelectionInProgress()
@@ -34,6 +34,21 @@ namespace TimeManager.States
         {
             _actionHandler.ConditionallyAddToSelection(quarterSender);
             quarterSender.SetSelectionFrame();
+        }
+
+        public void QuarterRectangle_MouseLeftButtonDown(Quarter quarterSender)
+        {
+
+        }
+
+        public void Window_MouseLeftButtonDown()
+        {
+
+        }
+
+        public void Window_MouseLeftButtonUp()
+        {
+            _actionHandler.SetQSstate();
         }
     }
 }

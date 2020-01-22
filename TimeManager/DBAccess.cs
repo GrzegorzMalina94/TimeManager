@@ -15,6 +15,37 @@ namespace TimeManager
 
         private DBAccess()
         {
+            int result;
+            string connectionString = "Data Source=TimeManagerDB.db";
+            string queryString = "SELECT COUNT(*) FROM sqlite_master\n" +
+                                 "WHERE type='table' AND name='Quarters'";
+
+            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                using (SQLiteCommand command = new SQLiteCommand(queryString, connection))
+                {
+                    using (SQLiteDataReader dataReader = command.ExecuteReader())
+                    {
+                        dataReader.Read();
+                        result = dataReader.GetInt32(0);
+                    }
+                }
+            }
+
+            if(result==0)
+            { 
+            queryString = "CREATE TABLE Quarters (id INTEGER, Plan TEXT, Report TEXT, PRIMARY KEY(id))";
+
+                using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+                {
+                    connection.Open();
+                    using (SQLiteCommand command = new SQLiteCommand(queryString, connection))
+                    {
+                        command.ExecuteNonQuery();                        
+                    }
+                }
+            }
 
         }
 
@@ -63,15 +94,13 @@ namespace TimeManager
                 return true;
         }
 
-        public int CountActivityAppearences(Activity activity, QrtrsMrkngMode markingKind, byte week)
+        public int CountActivityAppearences(Activity activity, QrtrsMrkngMode markingKind, int firstQuarter, int lastQuarter)
         {
-            int firstQrtOfWeekId = _nmbOfQrtsInWeek * (week - 1);
-            int lastQrtOfWeekId = firstQrtOfWeekId + _nmbOfQrtsInWeek - 1;
             int result;
             string connectionString = "Data Source=TimeManagerDB.db";
             string column = markingKind == QrtrsMrkngMode.Planning ? "Plan" : "Report";
             string queryString = "SELECT COUNT(*) FROM " + _targetTableName + "\n" +
-                                 "WHERE Id BETWEEN " + firstQrtOfWeekId + " AND " + lastQrtOfWeekId + "\n" +
+                                 "WHERE Id BETWEEN " + firstQuarter + " AND " + lastQuarter + "\n" +
                                  "AND " + column + " = '" + activity.Name + "';";
 
             using (SQLiteConnection connection = new SQLiteConnection(connectionString))

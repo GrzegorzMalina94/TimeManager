@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TimeManager"
         mc:Ignorable="d"
-        Title="StatisticsWindow" MinHeight="600" MinWidth="1200" >
+        Title="StatisticsWindow" Background="#cccccc" MinHeight="600" MinWidth="1200" >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="2.5*"/>
@@ -30,15 +30,28 @@
             </Grid.ColumnDefinitions>
             <StackPanel>
                 <Label Style="{StaticResource UpprStatWindLabl}">Month</Label>
-                <ComboBox HorizontalAlignment="Center" VerticalAlignment="Center" Width="120"/>
+                <ComboBox Name="MonthComboBox" HorizontalAlignment="Center" VerticalAlignment="Center" Width="120">
+                    <ComboBoxItem>January</ComboBoxItem>
+                    <ComboBoxItem>February</ComboBoxItem>
+                    <ComboBoxItem>March</ComboBoxItem>
+                    <ComboBoxItem>April</ComboBoxItem>
+                    <ComboBoxItem>May</ComboBoxItem>
+                    <ComboBoxItem>June</ComboBoxItem>
+                    <ComboBoxItem>July</ComboBoxItem>
+                    <ComboBoxItem>August</ComboBoxItem>
+                    <ComboBoxItem>September</ComboBoxItem>
+                    <ComboBoxItem>October</ComboBoxItem>
+                    <ComboBoxItem>November</ComboBoxItem>
+                    <ComboBoxItem>December</ComboBoxItem>
+                </ComboBox>
             </StackPanel>
             <StackPanel Grid.Column="1">
                 <Label Style="{StaticResource UpprStatWindLabl}">Week</Label>
-                <ComboBox HorizontalAlignment="Center" VerticalAlignment="Center" Width="120"/>
+                <ComboBox Name="StatWindWeekComboBox" HorizontalAlignment="Center" VerticalAlignment="Center" Width="120"/>
             </StackPanel>
             <StackPanel Grid.Column="2">
                 <Label Style="{StaticResource UpprStatWindLabl}">Day</Label>
-                <ComboBox HorizontalAlignment="Center" VerticalAlignment="Center" Width="120">
+                <ComboBox Name="DayComboBox" HorizontalAlignment="Center" VerticalAlignment="Center" Width="120">
                     <ComboBoxItem>Monday</ComboBoxItem>
                     <ComboBoxItem>Tuesday</ComboBoxItem>
                     <ComboBoxItem>Wednesday</ComboBoxItem>
@@ -50,13 +63,14 @@
             </StackPanel>
             <StackPanel Grid.Column="3">
                 <Label Style="{StaticResource UpprStatWindLabl}">Period</Label>
-                <ComboBox HorizontalAlignment="Center"  Grid.Column="3" VerticalAlignment="Center" Width="120">
+                <ComboBox Name="PeriodComboBox" HorizontalAlignment="Center"  Grid.Column="3" VerticalAlignment="Center" Width="120">
                     <ComboBoxItem>Day</ComboBoxItem>
                     <ComboBoxItem>Week</ComboBoxItem>
+                    <ComboBoxItem>Month</ComboBoxItem>
                 </ComboBox>
             </StackPanel>       
         </Grid>
-        <ScrollViewer Grid.Row="3" Grid.Column="1" Height="Auto">
+        <ScrollViewer Background="AliceBlue" Grid.Row="3" Grid.Column="1" Height="Auto">
             <Grid Name="InfoGrid" Grid.Column="1" Grid.Row="3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*"/>
@@ -80,7 +94,7 @@
                            FontWeight="Bold" >                        
                     </Label>
                 </StackPanel>
-                <StackPanel Name="RPlanPercent" Grid.Column="3">
+                <StackPanel Name="RltyToPlanSP" Grid.Column="3">
                     <Label Style="{StaticResource LowrStatWindLabl}" Content="Reality / plan&#10;  in percents"
                            FontWeight="Bold" >                        
                     </Label>
