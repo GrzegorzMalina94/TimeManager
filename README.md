@@ -15,7 +15,7 @@ Development of this project served improving skills in making WPF applications. 
 ## How to use (ilustrated with screenshots)
 When application is opened for the first time or when has been chosen week where nothing had been planned yet, then the main window looks like this:
 
-![Empty week](./img/Empty_week.png)
+![Empty week](Empty_week.png)
 **Pic. No. 1.**  Main window appearance when nothing has been planned neither reported.
 
 In the middle we can see timetable with a lot of rectangles. Each rectangle represents quarter. Each column represents a day. At the left side of timetable are labels which informs about hour. At the top of the timetable are labels which informs about day. Timetable can be scrolled. 
@@ -24,7 +24,7 @@ A the ride side of the main window we can see quite big white field with a title
 
 Below activities field has been placed "Statistics" button. It allows to open Statistics window. Both statistics window and controls which are under the "Statistics" button will be discussed below. Before that, here is visible main widow when week is partialy fullfilled with plans and reports:
 
-![Fullfilled week](./img/Empty_week.png)
+![Fullfilled week](Fullfilled_week.png)
 **Pic. No. 2.**  Main window appearance when almost for all time something was planned and for a lot of time something was reported.
 
 Thus, as it was said, each rectangle represents one quarter. In the picture number 2, in some rectangles we can see smaller rectangles. Color of bigger rectangle informs about what was planned for given quarter and color of small rectangle says what has been reported for the quarter.
@@ -36,7 +36,7 @@ How to change a plan or a report for the specified quarter or group of quarters?
     
 And how to change week? It is very simply. To that serves the combobox which is below the title-label "Week" (at the right side of main window). Main window was discussed above, below is shown Statistics Window.
 
-![Statistics Window](./img/screenshot.png)
+![Statistics Window](StatisticsWindow.png)
 **Pic. No. 3.**  A screenshot showing Statistics Window.
 
 In the statistics window, below the title, are four comboboxes. The first from the right combobox is used to determine the size of the period for which you want to see statistics. The period can have size of a day, a week or a month. The three other comboboxes are used to determine the location in time of the period for which the statistics we want to see. Statistics for selected span are displayed below comboboxes.
