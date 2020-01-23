@@ -24,7 +24,7 @@ A the ride side of the main window we can see quite big white field with a title
 
 Below activities field has been placed "Statistics" button. It allows to open Statistics window. Both statistics window and controls which are under the "Statistics" button will be discussed below. Before that, here is visible main widow when week is partialy fullfilled with plans and reports:
 
-![Fulfilled week](Fullfilled_week.png)
+![Fulfilled week](Fulfilled_week.png)
 **Pic. No. 2.**  Main window appearance when almost for all time something was planned and for a lot of time something was reported.
 
 Thus, as it was said, each rectangle represents one quarter. In the picture number 2, in some rectangles we can see smaller rectangles. Color of bigger rectangle informs about what was planned for given quarter and color of small rectangle says what has been reported for the quarter.
