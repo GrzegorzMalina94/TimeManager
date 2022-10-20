@@ -130,7 +130,6 @@ namespace TimeManager
                 connection.Open();
                 using (SQLiteCommand command = new SQLiteCommand(queryString, connection))
                 {
-                    command.ExecuteNonQuery();
                     for (int i = firstQrtOfWeekId; i <= lastQrtOfWeekId; i++)
                     {
                         command.CommandText = "INSERT INTO " + _targetTableName + "(id, Plan, Report)" +

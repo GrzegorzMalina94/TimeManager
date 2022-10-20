@@ -32,7 +32,7 @@ namespace TimeManager
         public StatisticsWindow()
         {
             InitializeComponent();
-            _dbAccess = DBAccess.GetInstance();            
+            _dbAccess = DBAccess.GetInstance();
 
             MonthComboBox.SelectedIndex = DateTime.Today.Month - 1;
             Week.PrepareWeekComboBox(StatWindWeekComboBox, Period.Month, (byte)DateTime.Today.Month);

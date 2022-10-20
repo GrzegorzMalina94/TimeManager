@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-D:\GM\Praca\Nauka domowa\Wpf\TimeManager\TimeManager\obj\Release\
+D:\GM\TimeManager\TimeManager\obj\Release\
 TimeManager
 none
 false
 TRACE
-D:\GM\Praca\Nauka domowa\Wpf\TimeManager\TimeManager\App.xaml
-51372206321
+D:\GM\TimeManager\TimeManager\App.xaml
+61195008277
 
-22-235445280
-242039623593
-ArroundActivities\ActivityControl.xaml;ArroundActivities\ActivityInputBox.xaml;MainResourceDictionary.xaml;MainWindow.xaml;StatisticsWindow.xaml;
+23613604091
+24-1624410816
+ArroundActivities\ActivityControl.xaml;ArroundActivities\ActivityInputBox.xaml;FillingWindow.xaml;MainResourceDictionary.xaml;MainWindow.xaml;StatisticsWindow.xaml;
 
 False
 

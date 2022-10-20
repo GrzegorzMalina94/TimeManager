@@ -127,5 +127,29 @@ namespace TimeManager
                 FirstWeekDaysInPastPeriod(Period.Month, month));
             return daysOffset * 96;            
         }
+
+        public static string GiveQuarterDescription(int qrtNumber)
+        {
+            string strFirstPart = "XX:XX";
+            string strSecondPart = "XX:XX";
+            string strHour, strMinutes;
+            int iHour, iMinutes;
+
+            //Here program Forms first part
+            iHour = (qrtNumber -1) / 4;
+            strHour = iHour < 10 ? "0" + iHour.ToString() : iHour.ToString();
+            iMinutes = (qrtNumber - 1)%4 * 15;
+            strMinutes = iMinutes == 0 ? "00" : iMinutes.ToString();
+            strFirstPart = $"{strHour}:{strMinutes}";
+
+            //Here program Forms second part
+            iHour = qrtNumber / 4;
+            strHour = iHour < 10 ? "0" + iHour.ToString() : iHour.ToString();
+            iMinutes = qrtNumber%4 * 15;
+            strMinutes = iMinutes == 0 ? "00" : iMinutes.ToString();
+            strSecondPart = $"{strHour}:{strMinutes}";
+
+            return $"{strFirstPart} - {strSecondPart}";
+        }
     }
 }

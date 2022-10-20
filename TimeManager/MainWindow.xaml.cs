@@ -25,6 +25,7 @@ namespace TimeManager
             _week.ActualInitialisation(WeekGrid, WeekComboBox);
 
             StatsBtn.Click += actionHandler.StatsBtn_Click;
+            FillWindBtn.Click += actionHandler.FillWindBtn_Click;
             WeekComboBox.SelectionChanged += actionHandler.WeekComboBox_SelectionChanged;
             PlanningRB.Checked += actionHandler.PlanningRB_Checked;
             ReportingRB.Checked += actionHandler.ReportingRB_Checked;

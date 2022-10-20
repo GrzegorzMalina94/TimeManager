@@ -4,15 +4,15 @@
 winexe
 C#
 .cs
-D:\GM\TimeManager\TimeManager\obj\Debug\
+D:\GM\TimeManager\TimeManager\obj\Release\
 TimeManager
 none
 false
-DEBUG;TRACE
+TRACE
 D:\GM\TimeManager\TimeManager\App.xaml
 61195008277
 
-23613604091
+27-1909608276
 24-1624410816
 ArroundActivities\ActivityControl.xaml;ArroundActivities\ActivityInputBox.xaml;FillingWindow.xaml;MainResourceDictionary.xaml;MainWindow.xaml;StatisticsWindow.xaml;
 

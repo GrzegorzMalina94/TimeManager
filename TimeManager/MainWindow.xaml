@@ -132,7 +132,9 @@
                     </StackPanel>
                 </StackPanel>
             </Border>
-            <Button Name="StatsBtn" Content="Statistics" FontSize="16" FontWeight="SemiBold" Height="25" Margin="0, 25, 0, 10"
+            <Button Name="StatsBtn" Content="Statistics" FontSize="16" FontWeight="SemiBold" Height="25" Margin="0, 25, 0, 1"
+                    Width="140" />
+            <Button Name="FillWindBtn" Content="Filling Window" FontSize="16" FontWeight="SemiBold" Height="25" Margin="0, 0, 0, 10"
                     Width="140" />
             <Label FontWeight="Bold" FontSize="18">Week:</Label>
             <ComboBox Name="WeekComboBox" HorizontalAlignment="Center" Margin="0, 0, 0, 10" VerticalAlignment="Center" Width="120" />

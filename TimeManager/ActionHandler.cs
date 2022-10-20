@@ -219,8 +219,14 @@ namespace TimeManager
         public void StatsBtn_Click(object sender, RoutedEventArgs e)
         {
             _week.SaveData();
-            StatisticsWindow statisticsWindow = new StatisticsWindow();
+            var statisticsWindow = new StatisticsWindow();
             statisticsWindow.ShowDialog();
+        }
+
+        public void FillWindBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var fillingWindow = new FillingWindow();
+            fillingWindow.ShowDialog();
         }
 
         public void PlanningRB_Checked(object sender, RoutedEventArgs e)
