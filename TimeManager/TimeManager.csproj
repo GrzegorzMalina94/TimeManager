@@ -86,12 +86,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ActionHandler.cs" />
-    <Compile Include="ArroundActivities\ActivitiesManager.cs" />
-    <Compile Include="ArroundActivities\Activity.cs" />
-    <Compile Include="ArroundActivities\ActivityControl.xaml.cs">
+    <Compile Include="AroundActivities\ActivitiesManager.cs" />
+    <Compile Include="AroundActivities\Activity.cs" />
+    <Compile Include="AroundActivities\ActivityControl.xaml.cs">
       <DependentUpon>ActivityControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ArroundActivities\ActivityInputBox.xaml.cs">
+    <Compile Include="AroundActivities\ActivityInputBox.xaml.cs">
       <DependentUpon>ActivityInputBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="DBAccess.cs" />
@@ -110,11 +110,11 @@
     </Compile>
     <Compile Include="VariousTools.cs" />
     <Compile Include="Week.cs" />
-    <Page Include="ArroundActivities\ActivityControl.xaml">
+    <Page Include="AroundActivities\ActivityControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ArroundActivities\ActivityInputBox.xaml">
+    <Page Include="AroundActivities\ActivityInputBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
