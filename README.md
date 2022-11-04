@@ -50,11 +50,8 @@ In the statistics window, below the title, are four comboboxes. The first from t
 ## Setup
 Download project, unzip it and then:
 
-#### Frist way
 Open TimeManager-master folder, then TimeManager, then bin folder, then Debug (or Release) folder, and at the end trace and launch TimeManager.exe.
 
-#### Second way (Visual Studio needed)
-Open TimeManager-master folder and then make double click on the TimeManager.sln.
 
 
 ## Features
@@ -63,10 +60,13 @@ List of features:
 * enable to review the statistics fot the selected period
 
 To-do list (future development):
-* add charts to the statistics window
-* enable data for the previous year to be recorded
-* enable the statistics for the whole year to be reviewed
+* Introduction of an additional window supporting the timetable fulfillment
+* Adding graphic information whether the changes made have been saved in the database and a button enabling saving to the database
+* Introducing the possibility of withdrawing the last few actions
+* Adding charts to the statistics window
+* Enabling data for the previous year to be recorded
+* Enabling the statistics for the whole year to be reviewed
 
 ## Status
-The project will temporarily not be continued.
+The project will be continued.
 
