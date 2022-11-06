@@ -4,6 +4,8 @@ using System.Windows.Controls;
 
 namespace TimeManager
 {
+    #region Enums
+
     public enum Period
     {
         Day = 0,
@@ -12,8 +14,12 @@ namespace TimeManager
         Year = 3
     }
 
+    #endregion
+
     public class Week
     {
+        #region Fields
+
         static Week _instance;
         ActionHandler _actionHandler;
         byte _crrntlChosenWeek;
@@ -25,10 +31,18 @@ namespace TimeManager
 
         public static int QnttOfQrtsInWeek = 672;
 
+        #endregion
+
+        #region Properties
+
         public byte CurrentlyDisplayedWeek
         {
             get { return _crrntlChosenWeek; }
         }
+
+        #endregion
+
+        #region Static methods (except GetInstance)
 
         public static void PrepareWeekComboBox(ComboBox weekComboBox, Period period, byte month = 0)
         {
@@ -77,6 +91,10 @@ namespace TimeManager
             return weekStartStr + " - " + weekEndStr + " " + weekNumberStr;
         }
 
+        #endregion
+
+        #region ctor + GetInstance
+
         private Week()
         {
 
@@ -91,16 +109,22 @@ namespace TimeManager
             else return _instance;
         }
 
-        Quarter GetQuarter(byte day, byte quarter)
+        #endregion
+
+        #region Methods
+
+        void TakeSelectedWeekDataFromDB(out string[] plan, out string[] report)
         {
-            return _days[day].GetQuarter(quarter);
+            TakeDataFromDbOfWeekIndicatedByParameter(_crrntlChosenWeek, out plan, out report);
         }
 
-        void TakeSelectedWeekDataFromDB(string[] plan, string[] report)
+        public void TakeDataFromDbOfWeekIndicatedByParameter(int indicatedWeek, out string[] plan, out string[] report)
         {
-            if (!_dbAccess.CheckWeekInDB(_crrntlChosenWeek))
-                _dbAccess.PrepareDefaultWeekContnent(_crrntlChosenWeek);
-            _dbAccess.ReadData(_crrntlChosenWeek, plan, report);
+            plan = new string[QnttOfQrtsInWeek];
+            report = new string[QnttOfQrtsInWeek];
+            if (!_dbAccess.CheckWeekInDB(indicatedWeek))
+                _dbAccess.PrepareDefaultWeekContnent(indicatedWeek);
+            _dbAccess.ReadData(indicatedWeek, plan, report);
         }
 
         public void ActualInitialisation(Grid centralGrid, ComboBox weekComboBox)
@@ -115,10 +139,9 @@ namespace TimeManager
             PrepareWeekComboBox(_weekComboBox, Period.Year);
             _crrntlChosenWeek = (byte)(_weekComboBox.SelectedIndex + 1);
 
-            //Creating "Day" variables and theirs representation in GUI. 
-            string[] plan = new string[QnttOfQrtsInWeek];
-            string[] report = new string[QnttOfQrtsInWeek];
-            TakeSelectedWeekDataFromDB(plan, report);
+            //Creating "Day" variables and theirs representation in GUI.
+            string[] plan, report;
+            TakeSelectedWeekDataFromDB(out plan, out report);
             for (byte i = 0; i < 7; i++)
             {
                 StackPanel dayStackPanel = new StackPanel();
@@ -144,14 +167,15 @@ namespace TimeManager
         public void UpdateView()
         {
             _crrntlChosenWeek = (byte)(_weekComboBox.SelectedIndex + 1);
-            string[] plan = new string[QnttOfQrtsInWeek];
-            string[] report = new string[QnttOfQrtsInWeek];
-            TakeSelectedWeekDataFromDB(plan, report);
+            string[] plan, report;
+            TakeSelectedWeekDataFromDB(out plan,out report);
             for (byte i = 0; i < 7; i++)
             {
                 _days[i].DayPlan = plan.Skip(i * 96).Take(96).ToArray();
                 _days[i].DayReport = report.Skip(i * 96).Take(96).ToArray();
             }
         }
+
+        #endregion
     }
 }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
@@ -11,12 +7,17 @@ using System.Windows.Media;
 
 namespace TimeManager
 {
+    #region Enums
+
     public enum QrtrsMrkngMode { Planning, Reporting }
     public enum RemovingActivityCtrlErr { NothingActivityRemovingAttmpt, NoneActivitySelected, NoError }
 
+    #endregion 
+
     class ActionHandler
     {
-        //------------------------- FIELDS DECLARATION AND PROPERTIES ------------------------------------------------------------------------
+        #region Fields
+
         bool _weekChngInPrgrss = false;
         private static ActionHandler _instance;
         private QrtrsMrkngMode _mode;
@@ -26,10 +27,13 @@ namespace TimeManager
         IState _QSstate;
         IState _SIPstate;
         Week _week;
-
+        DBAccess _dbAccess;
         private List<Quarter> _selectedQuarters = new List<Quarter>();
 
-        //-------------------------- METHODS - ENSURING SINGLETON PATTERN -------------------------------------------------------------------
+        #endregion
+
+        #region Methods - ensuring singleton pattern
+
         private ActionHandler()
         {
             
@@ -44,13 +48,15 @@ namespace TimeManager
             return _instance;
         }
 
+        #endregion
 
+        #region Start Method
 
-        //-------------------------- START METHOD -------------------------------------------------------------------------------------------
         public void Start(ActivitiesManager activitiesManager)
         {
             _activitiesManager = activitiesManager;
             _week = Week.GetInstance();
+            _dbAccess = DBAccess.GetInstance();
 
             _defaultState = new States.Default(activitiesManager);
             _QSstate = new States.QuartersSelected();
@@ -59,9 +65,10 @@ namespace TimeManager
             _currentState = _defaultState;
         }
 
+        #endregion
 
+        #region Methods concerning adding, clicking and removing activity controls
 
-        //------------------- METHODS CONCERNING ADDING, CLICKING AND REMOVING ACTIVITYCONTROLS -----------------------
         public void ActivityControl_Click(object sender, RoutedEventArgs e)
         {
             _currentState.ActivityControl_Click(sender);
@@ -128,9 +135,10 @@ namespace TimeManager
             }            
         }
 
+        #endregion
 
+        #region Methods concerning directly _selectedQuarters list
 
-        //-------------------------- METHODS CONCERNING DIRECTLY _selectedQuarters LIST -------------------------------
         /// <summary>
         /// Adds given quarter to _selectedQuarter list if this list does not contain given quarter.
         /// </summary>
@@ -164,10 +172,11 @@ namespace TimeManager
                 quarter.SetStandardFrame();
             _selectedQuarters.RemoveAll(quarter => quarter != null);
         }
-        
 
+        #endregion
 
-        //-------------------------- METHODS HANDLING MOUSE EVENTS CONCERNING SELECTION -------------------------------
+        #region Methods handling mouse events concerning selection
+
         public void WeekGrid_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
             _currentState.WeekGrid_MouseLeave();
@@ -193,8 +202,9 @@ namespace TimeManager
             _currentState.Window_MouseLeftButtonUp();
         }
 
+        #endregion
 
-
+        #region Methods to set particular states
         //-------------------------- METHODS TO SET PARTICULAR STATES -------------------------------------------------
         public void SetDefaultState()
         {
@@ -214,8 +224,12 @@ namespace TimeManager
             _currentState.OnEnter();
         }
 
+        #endregion
 
-        //-------------------------- OTHER ----------------------------------------------------------------------------
+        #region Others
+
+        #region Buttons
+
         public void StatsBtn_Click(object sender, RoutedEventArgs e)
         {
             _week.SaveData();
@@ -229,6 +243,29 @@ namespace TimeManager
             fillingWindow.ShowDialog();
         }
 
+        public void PstPrvWeekBtn_Click(object sender, RoutedEventArgs e)
+        {
+            string title = "Paste previous week - warning";
+            string message = "Warning! The change will be irreversible. Data may be lost." +
+                "\nAre you sure that you want replace data of current week with data of previous week?";
+            
+            DialogResult MssgBoxResult = System.Windows.Forms.MessageBox.Show(message, title, MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+            
+            if (MssgBoxResult == DialogResult.OK)
+            {
+                string[] plan, report;
+                int prvWeekNumber = _week.CurrentlyDisplayedWeek - 1;
+                _week.TakeDataFromDbOfWeekIndicatedByParameter(prvWeekNumber, out plan, out report);
+                //Below: the data is form the previous week, but we save it as the data for the current week!
+                _dbAccess.SaveData(_week.CurrentlyDisplayedWeek, plan, report);
+                _week.UpdateView();
+            }
+        }
+
+        #endregion
+
+        #region Planning / reporting radio button
+
         public void PlanningRB_Checked(object sender, RoutedEventArgs e)
         {
             _mode = QrtrsMrkngMode.Planning;
@@ -238,6 +275,8 @@ namespace TimeManager
         {
             _mode = QrtrsMrkngMode.Reporting;
         }
+
+        #endregion
 
         public void WeekComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -259,5 +298,7 @@ namespace TimeManager
                 _weekChngInPrgrss = false;
             }
         }
+
+        #endregion
     }
 }

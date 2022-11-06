@@ -23,8 +23,6 @@
         </Grid.RowDefinitions>
         <Label Content="Time Manager" Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Center" Height="Auto" 
                VerticalAlignment="Center" Margin="0,10" Width="Auto" FontFamily="Times New Roman" FontSize="48"/>
-        <Label Content="v. 1.0" Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Right" Height="Auto" 
-               VerticalAlignment="Center" Margin="0,0,50,0" Width="Auto" FontFamily="Times New Roman" FontSize="48"/>
         <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -133,9 +131,11 @@
                 </StackPanel>
             </Border>
             <Button Name="StatsBtn" Content="Statistics" FontSize="16" FontWeight="SemiBold" Height="25" Margin="0, 25, 0, 1"
-                    Width="140" />
-            <Button Name="FillWindBtn" Content="Filling Window" FontSize="16" FontWeight="SemiBold" Height="25" Margin="0, 0, 0, 10"
-                    Width="140" />
+                    Width="160" />
+            <Button Name="PstPrvWeekBtn" Content="Paste previous week" FontSize="16" FontWeight="SemiBold" Height="25" Margin="0, 5, 0, 1"
+                    Width="160" />
+            <Button Name="FillWindBtn" Content="Filling Window" FontSize="16" FontWeight="SemiBold" Height="25" Margin="0, 5, 0, 10"
+                    Width="160" />
             <Label FontWeight="Bold" FontSize="18">Week:</Label>
             <ComboBox Name="WeekComboBox" HorizontalAlignment="Center" Margin="0, 0, 0, 10" VerticalAlignment="Center" Width="120" />
             <Label Content="Mode:" FontWeight="Bold" FontSize="18" />

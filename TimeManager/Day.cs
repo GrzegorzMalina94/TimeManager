@@ -1,49 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Shapes;
 
 namespace TimeManager
-{    
+{
     class Day
     {
-        Quarter[] _quarters = new Quarter[96];
+        #region Properties
+
         StackPanel _dayStackPanel { get; set; }
-        ActivitiesManager _activitiesManager;
-        byte _id;
-
-        public Day(StackPanel dayStackPanel, string name, string[] plan, string[] report, byte id)
-        {
-            _dayStackPanel = dayStackPanel;
-            _id = id;
-            _activitiesManager = ActivitiesManager.GetInstance();
-
-            //Creating all quarters:
-            //When some data was taken from database.
-            if(plan != null)
-            {
-                for (byte i = 0; i < 96; i++)
-                {
-                    Activity plannedActivity = _activitiesManager.GetActivity(plan[i]);
-                    Activity reportedActivity = _activitiesManager.GetActivity(report[i]);
-                    _quarters[i] = new Quarter(PrepareQuartersArea(), plannedActivity, reportedActivity, new QuarterIdentifier(_id, i));
-                }
-            }
-            else // When any data wasn't taken from database.
-            {
-                for (byte i = 0; i < 96; i++)
-                {
-                    Activity activity = ActivitiesManager.NullActivity;
-                    _quarters[i] = new Quarter(PrepareQuartersArea(), activity, activity, new QuarterIdentifier(_id, i));
-                }
-            }
-            
-        }
 
         public string[] DayPlan
         {
@@ -101,6 +66,50 @@ namespace TimeManager
             }
         }
 
+        #endregion
+
+        #region Fields
+
+        Quarter[] _quarters = new Quarter[96];
+        ActivitiesManager _activitiesManager;
+        byte _id;
+
+        #endregion
+
+        #region ctor
+
+        public Day(StackPanel dayStackPanel, string name, string[] plan, string[] report, byte id)
+        {
+            _dayStackPanel = dayStackPanel;
+            _id = id;
+            _activitiesManager = ActivitiesManager.GetInstance();
+
+            //Creating all quarters:
+            //When some data was taken from database.
+            if(plan != null)
+            {
+                for (byte i = 0; i < 96; i++)
+                {
+                    Activity plannedActivity = _activitiesManager.GetActivity(plan[i]);
+                    Activity reportedActivity = _activitiesManager.GetActivity(report[i]);
+                    _quarters[i] = new Quarter(PrepareQuartersArea(), plannedActivity, reportedActivity, new QuarterIdentifier(_id, i));
+                }
+            }
+            else // When any data wasn't taken from database.
+            {
+                for (byte i = 0; i < 96; i++)
+                {
+                    Activity activity = ActivitiesManager.NullActivity;
+                    _quarters[i] = new Quarter(PrepareQuartersArea(), activity, activity, new QuarterIdentifier(_id, i));
+                }
+            }
+            
+        }
+
+        #endregion
+
+        #region Methods
+
         StackPanel PrepareQuartersArea()
         {
             Border border = new Border();
@@ -118,5 +127,7 @@ namespace TimeManager
         {
             return _quarters[quarterNumber];
         }
+
+        #endregion
     }
 }
