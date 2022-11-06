@@ -20,7 +20,7 @@ When application is opened for the first time or when has been chosen week where
 
 In the middle we can see timetable with a lot of rectangles. Each rectangle represents quarter. Each column represents a day. At the left side of timetable are labels which informs about hour. At the top of the timetable are labels which informs about day. Timetable can be scrolled. 
 
-A the ride side of the main window we can see quite big white field with a title "Activities". In this field, under the title, are visible activities and each hat own color. Those activities were added via "Add" button which is at the bottom of the field. Beside "Add" button can be seen "Remove" button. It serves to removing activities - first activity must be chosen by clicking left mouse button (black border around activity will appear), then it can be removed by clicking "Remove" button. Only "activity", which can not be removed is a pseudoactivity "Nothing". 
+At the ride side of the main window we can see quite big white field with a title "Activities". In this field, under the title, are visible activities and each hat own color. Those activities were added via "Add" button which is at the bottom of the field. Beside "Add" button can be seen "Remove" button. It serves to removing activities - first activity must be chosen by clicking left mouse button (black border around activity will appear), then it can be removed by clicking "Remove" button. Only "activity", which can not be removed is a pseudoactivity "Nothing". 
 
 Below activities field has been placed "Statistics" button. It allows to open Statistics window. Both statistics window and controls which are under the "Statistics" button will be discussed below. Before that, here is visible main widow when week is partialy fullfilled with plans and reports:
 
@@ -50,11 +50,8 @@ In the statistics window, below the title, are four comboboxes. The first from t
 ## Setup
 Download project, unzip it and then:
 
-#### Frist way
 Open TimeManager-master folder, then TimeManager, then bin folder, then Debug (or Release) folder, and at the end trace and launch TimeManager.exe.
 
-#### Second way (Visual Studio needed)
-Open TimeManager-master folder and then make double click on the TimeManager.sln.
 
 
 ## Features
@@ -63,10 +60,13 @@ List of features:
 * enable to review the statistics fot the selected period
 
 To-do list (future development):
-* add charts to the statistics window
-* enable data for the previous year to be recorded
-* enable the statistics for the whole year to be reviewed
+* Introduction of an additional window supporting the timetable fulfillment
+* Adding graphic information whether the changes made have been saved in the database and a button enabling saving to the database
+* Introducing the possibility of withdrawing the last few actions
+* Adding charts to the statistics window
+* Enabling data for the previous year to be recorded
+* Enabling the statistics for the whole year to be reviewed
 
 ## Status
-The project will temporarily not be continued.
+The project will be continued.
 
